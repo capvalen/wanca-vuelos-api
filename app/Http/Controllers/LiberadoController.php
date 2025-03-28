@@ -13,7 +13,9 @@ class LiberadoController extends Controller
      */
     public function index()
     {
-        $liberados = Liberado::where('activo', 1)->orderBy('id', 'desc')->limit(50)->get();
+        $liberados = Liberado::where('activo', 1)->orderBy('id', 'desc')
+        ->with('relacion')
+        ->limit(50)->get();
         return response()->json($liberados);
     }
 
@@ -63,7 +65,8 @@ class LiberadoController extends Controller
      */
     public function show(string $id)
     {
-        $liberado = Liberado::where('id', $id)->first();
+        $liberado = Liberado::where('id', $id)
+        ->with('relacion')->first();
         return response()->json($liberado);
     }
 
@@ -123,16 +126,31 @@ class LiberadoController extends Controller
 
 		$query = Liberado::query();
 
-    if ($request->filled('dni')) {
-        $query->where('dni', 'like', '%' . $request->dni . '%');
+        if ($request->filled('dni')) {
+            $query->where('dni', 'like', '%' . $request->dni . '%');
+        }
+
+        if ($request->filled('nombres')) {
+            $query->where('apellidos', 'like', '%' . $request->nombres . '%')
+            ->orWhere('nombres', 'like', '%' . $request->nombres . '%');
+        }
+
+        $clientes = $query->get();
+        return response()->json($clientes);
     }
 
-    if ($request->filled('nombres')) {
-        $query->where('apellidos', 'like', '%' . $request->nombres . '%')
-        ->orWhere('nombres', 'like', '%' . $request->nombres . '%');
+    public function filtrarLiberado(Request $request){
+        if($request->input('texto')=='' || $request->input('texto') == null ){
+            return response()->json(null, 400);
+        }
+        $texto = $request->input('texto');
+        $participante = Liberado::where('apellidos', 'like', "%{$texto}%")
+        ->orWhere('nombres', 'like', "%{$texto}%")
+        ->orWhere('dni', $texto)
+        ->orWhere('celular', $texto)
+        ->orderBy('apellidos', 'asc')
+        ->orderBy('nombres', 'asc')
+        ->get();
+        return response()->json($participante);
     }
-
-		$clientes = $query->get();
-		return response()->json($clientes);
-	}
 }

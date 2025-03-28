@@ -31,13 +31,20 @@ class Paquete extends Model
         return $this->belongsToMany(Participante::class, 'paquete_participantes')
         ->wherePivot('activo', 1)  // 👈 Filtra por activo=1 en la pivot
         ->withPivot('id');
-}
+    }
+
+    public function liberados()
+    {
+        return $this->belongsToMany(Liberado::class, 'paquete_liberados')
+        ->wherePivot('activo', 1)  // 👈 Filtra por activo=1 en la pivot
+        ->with('relacion')
+        ->withPivot('id');
+    }
 
     public function proveedores(){
         return $this->belongsToMany(Proveedor::class, 'paquete_proveedors')
         ->wherePivot('activo', 1)  // 👈 Filtra por activo=1 en la pivot
         ->withPivot('id');
     }
-    
     
 }

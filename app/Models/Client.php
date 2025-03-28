@@ -13,6 +13,6 @@ class Client extends Model
 
     public function paquetes()
     {
-        return $this->hasMany(Paquete::class);
+        return $this->hasMany(Paquete::class)->with(['participantes', 'liberados']);
     }
 }

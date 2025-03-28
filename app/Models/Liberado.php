@@ -22,4 +22,10 @@ class Liberado extends Model
         'fecha_acuerdo',
         'activo',
     ];
+
+    public function relacion()
+    {
+        return $this->belongsTo(Relacion::class);
+    }
+  
 }

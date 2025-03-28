@@ -105,6 +105,31 @@ class ParticipanteController extends Controller
 		return response()->json($task);
     }
     
+    public function filtrarParticipante(Request $request){
+		$request->validate([
+			'dni' => 'nullable|string|max:20',
+			'nombres' => 'nullable|string|max:100',
+		]);
+
+		if (empty($request->dni) && empty($request->nombres)) {
+			return response()->json( [0 => ['nombres' => 'Debe ingresar al menos DNI o Nombres para buscar']] );
+		}
+
+		$query = Participante::query();
+
+        if ($request->filled('dni')) {
+            $query->where('dni', 'like', '%' . $request->dni . '%');
+        }
+
+        if ($request->filled('nombres')) {
+            $query->where('apellidos', 'like', '%' . $request->nombres . '%')
+            ->orWhere('nombres', 'like', '%' . $request->nombres . '%');
+        }
+
+        $clientes = $query->get();
+        return response()->json($clientes);
+    }
+
     public function buscarParticipante(Request $request){
         if($request->input('texto')=='' || $request->input('texto') == null ){
             return response()->json(null, 400);

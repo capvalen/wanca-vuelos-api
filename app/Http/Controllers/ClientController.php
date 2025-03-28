@@ -97,7 +97,7 @@ class ClientController extends Controller
 		$query = Client::query();
 
     if ($request->filled('dni')) {
-        $query->where('ruc', 'like', '%' . $request->dni . '%');
+        $query->where('ruc', '=', $request->dni);
     }
 
     if ($request->filled('nombres')) {
@@ -107,4 +107,15 @@ class ClientController extends Controller
 		$clientes = $query->get();
 		return response()->json($clientes);
 	}
+
+	public function filtrarCliente(Request $request){
+		if($request->input('texto')=='' || $request->input('texto') == null ){
+				return response()->json(null, 400);
+		}
+		$texto = $request->input('texto');
+		$participante = Client::where('razon', 'like', "%{$texto}%")
+		->orWhere('razon', $texto)
+		->get();
+		return response()->json($participante);
+}
 }

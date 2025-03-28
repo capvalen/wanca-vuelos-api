@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CajaController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConceptoController;
 use App\Http\Controllers\CuotaController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\DestinoController;
 use App\Http\Controllers\LiberadoController;
 use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\PaqueteController;
+use App\Http\Controllers\PaqueteLiberadosController;
 use App\Http\Controllers\PaqueteParticipanteController;
 use App\Http\Controllers\PaqueteProveedorController;
 use App\Http\Controllers\ParticipanteController;
@@ -38,9 +40,16 @@ Route::resource('participantes', ParticipanteController::class)->only('index', '
 Route::resource('liberados', LiberadoController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('paquete-participante', PaqueteParticipanteController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('paquete-proveedor', PaqueteProveedorController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('paquete-liberado', PaqueteLiberadosController::class)->only('index', 'store', 'update', 'destroy', 'show');
 
 Route::post('buscarCliente', [ClientController::class, 'buscarCliente']);
 Route::post('buscarLiberado', [LiberadoController::class, 'buscarLiberado']);
 Route::post('buscarParticipante', [ParticipanteController::class, 'buscarParticipante']);
+Route::post('filtrarLiberado', [LiberadoController::class, 'filtrarLiberado']);
+Route::post('filtrarParticipante', [ParticipanteController::class, 'filtrarParticipante']);
+Route::post('filtrarCliente', [ClientController::class, 'filtrarCliente']);
+Route::post('filtrarPaquete', [PaqueteController::class, 'filtrarPaquete']);
 Route::post('buscarProveedor', [ProveedorController::class, 'buscarProveedor']);
 Route::post('agregarParticipante', [PaqueteController::class, 'agregarParticipantePaquete']);
+Route::get('cajaPorFecha/{fecha}', [CajaController::class, 'cajaPorFecha']);
+Route::get('ultimaCaja', [CajaController::class, 'ultimaCaja']);
