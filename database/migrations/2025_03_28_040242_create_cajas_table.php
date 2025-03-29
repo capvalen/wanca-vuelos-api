@@ -18,8 +18,7 @@ return new class extends Migration
             $table->dateTime('fecha_apertura')->nullable()->default(null);
             $table->dateTime('fecha_cierre')->nullable()->default(null);
             $table->decimal('inicial', total:10, places:2)->default(0);
-            $table->decimal('cierre', total:10, places:2)->nullable()->default(0);
-            $table->decimal('tipo_cambio', total:10, places:2)->nullable()->default(0);
+            $table->decimal('cierre', total:10, places:2)->nullable()->default(0);            
             $table->decimal('monto_ingresos_soles', total:10, places:2)->nullable()->default(0);
             $table->decimal('monto_ingresos_dolares', total:10, places:2)->nullable()->default(0);
             $table->decimal('monto_salida_soles', total:10, places:2)->nullable()->default(0);

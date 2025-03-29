@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Proceso;
+use App\Models\CajaMovimientos;
 use Illuminate\Http\Request;
 
-class ProcesoController extends Controller
+class CajaMovimientosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Proceso::where('activo', 1)->orderBy('proceso', 'asc')->get();
+        //
     }
 
     /**
@@ -20,7 +20,8 @@ class ProcesoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $movimiento = CajaMovimientos::create($request->all());
+        return response()->json($movimiento);
     }
 
     /**

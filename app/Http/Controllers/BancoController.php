@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banco;
 use Illuminate\Http\Request;
 
-class CajaMovimientos extends Controller
+class BancoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Banco::where('activo', 1)->get();
     }
 
     /**

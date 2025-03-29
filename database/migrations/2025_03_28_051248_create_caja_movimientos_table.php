@@ -15,9 +15,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('caja_id')->constrained()->onDelete('cascade');
             $table->foreignId('proceso_id')->constrained()->onDelete('cascade');
+            $table->enum('tipo_participante', ['x','personal', 'junta'])->default('personal')->default('x');
+            $table->foreignId('paquete_id')->nullable()->constrained()->onDelete('cascade')->default(null);
+            $table->foreignId('participante_id')->nullable()->constrained()->onDelete('cascade')->default(null);
             $table->decimal('monto', total:10, places:2)->default(0);
             $table->foreignId('moneda_id')->constrained()->onDelete('cascade');
-            $table->string('observaciones');
+            $table->foreignId('banco_id')->nullable()->constrained()->onDelete('cascade')->default(null);
+            $table->enum('cuenta', ['x', 'Nery', 'Tradition', 'Christian'])->default('x');
+            $table->decimal('tipo_cambio', total:10, places:2)->nullable()->default(0);
+            $table->string('num_operacion')->nullable();
+            $table->date('fecha_deposito')->nullable()->default(null);
+            $table->string('observaciones')->nullable()->default(null);;
             $table->boolean('activo')->default(true);
             $table->timestamps();
         });

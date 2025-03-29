@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BancoController;
 use App\Http\Controllers\CajaController;
+use App\Http\Controllers\CajaMovimientosController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConceptoController;
 use App\Http\Controllers\CuotaController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\PaqueteLiberadosController;
 use App\Http\Controllers\PaqueteParticipanteController;
 use App\Http\Controllers\PaqueteProveedorController;
 use App\Http\Controllers\ParticipanteController;
+use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RelacionController;
 use App\Http\Controllers\ServicioController;
@@ -41,6 +44,9 @@ Route::resource('liberados', LiberadoController::class)->only('index', 'store', 
 Route::resource('paquete-participante', PaqueteParticipanteController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('paquete-proveedor', PaqueteProveedorController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('paquete-liberado', PaqueteLiberadosController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('bancos', BancoController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('procesos', ProcesoController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('caja-movimientos', CajaMovimientosController::class)->only('index', 'store', 'update', 'destroy', 'show');
 
 Route::post('buscarCliente', [ClientController::class, 'buscarCliente']);
 Route::post('buscarLiberado', [LiberadoController::class, 'buscarLiberado']);

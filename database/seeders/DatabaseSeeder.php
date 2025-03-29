@@ -36,5 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ConceptoSemilla::class);
         $this->call(ServicioSemilla::class);
         $this->call(RelacionSemilla::class);
+        $this->call(BancoSemilla::class);
+        $this->call(ProcesoSemilla::class);
+        $this->call(CajaSemilla::class);
     }
 }
