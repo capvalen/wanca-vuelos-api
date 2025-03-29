@@ -13,7 +13,7 @@ class PaqueteController extends Controller
     public function index()
     {
         return Paquete::where('activo', 1)->orderBy('id', 'desc')
-        ->with('cliente', 'destino', 'cuotas', 'viajes', 'participantes', 'proveedores', 'liberados')
+        ->with('cliente', 'destino', 'cuotas', 'viajes', 'participantes', 'proveedores', 'liberados', 'aportaciones')
         ->limit(50)
         ->orderBy('id', 'desc')
         ->get();
@@ -59,7 +59,7 @@ class PaqueteController extends Controller
     {
         return Paquete::where('id', $id)
         ->where('activo', 1)
-        ->with('cliente', 'destino', 'cuotas', 'viajes', 'participantes', 'proveedores', 'liberados')
+        ->with('cliente', 'destino', 'cuotas', 'viajes', 'participantes', 'proveedores', 'liberados', 'aportaciones')
         ->first();
     }
 

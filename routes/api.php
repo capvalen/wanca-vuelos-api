@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AportacionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RelacionController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ViajeController;
+use App\Models\CajaMovimientos;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -46,7 +48,9 @@ Route::resource('paquete-proveedor', PaqueteProveedorController::class)->only('i
 Route::resource('paquete-liberado', PaqueteLiberadosController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('bancos', BancoController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('procesos', ProcesoController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('cajas', CajaController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('caja-movimientos', CajaMovimientosController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('aportaciones', AportacionController::class)->only('index', 'store', 'update', 'destroy', 'show');
 
 Route::post('buscarCliente', [ClientController::class, 'buscarCliente']);
 Route::post('buscarLiberado', [LiberadoController::class, 'buscarLiberado']);

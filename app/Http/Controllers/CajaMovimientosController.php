@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aportacion;
 use App\Models\CajaMovimientos;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CajaMovimientosController extends Controller
@@ -21,7 +23,18 @@ class CajaMovimientosController extends Controller
     public function store(Request $request)
     {
         $movimiento = CajaMovimientos::create($request->all());
-        return response()->json($movimiento);
+
+        if($request->proceso_id!=1 && $request->proceso_id!=2){
+            $data = $request->all();
+            $data['fecha'] = Carbon::now();
+            $data['caja_movimientos_id'] = $movimiento->id;
+
+            $aportacion = Aportacion::create($data);
+
+            return response()->json($aportacion); 
+        }
+        
+        return response()->json(CajaMovimientos::find($movimiento->id));
     }
 
     /**
@@ -37,9 +50,11 @@ class CajaMovimientosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $movimiento = CajaMovimientos::find($id);
+        $movimiento->update($request->all());
+        return response()->json($movimiento);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */

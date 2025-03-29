@@ -46,5 +46,10 @@ class Paquete extends Model
         ->wherePivot('activo', 1)  // 👈 Filtra por activo=1 en la pivot
         ->withPivot('id');
     }
+
+    public function aportaciones(){
+        return $this->hasMany(Aportacion::class)
+        ->where('activo', 1);
+    }
     
 }

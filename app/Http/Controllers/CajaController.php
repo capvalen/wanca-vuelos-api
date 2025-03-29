@@ -22,7 +22,9 @@ class CajaController extends Controller
     public function store(Request $request)
     {
         $confirmado = Validator::make($request->all(),[
-
+            'user_id' => 'required|integer',
+            'apertura' => 'required|numeric',
+            'observaciones' => 'nullable|string|max:255'
         ]);
 
         if($confirmado->fails()){
@@ -35,9 +37,12 @@ class CajaController extends Controller
         }
 
         $caja = Caja::create([
-            'tarea' => $confirmado['tarea'],
-            'costo' => $confirmado['costo'],
-            'completado' => false //valor por defecto (0 en BD)
+            'user_id' => $request->user_id,
+            'estado' => 'abierta',
+            'fecha_apertura' => Carbon::now(),
+            'inicial' => $request->apertura,
+            'cierre' => 0,
+            'observaciones' => $request->observaciones
         ]);
 
         return response()->json($caja, 201);
@@ -83,7 +88,13 @@ class CajaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       if($request->get('estado')=='cerrada'){
+        $caja = Caja::find($id);
+        $caja->estado= 'cerrada';
+        $caja->fecha_cierre = Carbon::now();
+        $caja->save();
+        return $caja;
+       }
     }
 
     /**
