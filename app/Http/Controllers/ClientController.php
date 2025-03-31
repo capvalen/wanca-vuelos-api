@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\ClientDocumento;
+use App\Models\Documento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +17,7 @@ class ClientController extends Controller
 	{
 		//$clientes = Client::all()
 		$clientes = Client::orderBy('id', 'desc')
-		->with('paquetes')
+		->with('paquetes', 'documentos')
 		->get();
 		return response()->json($clientes);
 	}
@@ -41,11 +43,21 @@ class ClientController extends Controller
 		}
 	
 		//Una vez validado, se crea, pero se toma datos por defecto de lo ya validado
-		$tarea = Client::create($confirmado->validated());
+		$cliente = Client::create($confirmado->validated());
+
+		$documetos = Documento::where('pertenencia', 'cliente')->get();
+
+		$data = [];
+
+		foreach ($documetos as $documento) {
+			$data['client_id'] = $cliente->id;
+			$data['documento_id'] = $documento->id;
+			ClientDocumento::create($data);
+		}
 	
 		//Engrega un código de respuesta 201 = elemento creado
 		// entregamos la $tarea que acabamos de ingresar
-		return response()->json($tarea, 201);
+		return response()->json($cliente, 201);
 	}
 
 	/**
@@ -53,7 +65,7 @@ class ClientController extends Controller
 	 */
 	public function show(string $id)
 	{
-		$cliente = Client::with('paquetes')->find($id);
+		$cliente = Client::with('paquetes', 'documentos')->find($id);
 		return response()->json($cliente);
 	}
 

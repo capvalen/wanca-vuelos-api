@@ -15,4 +15,8 @@ class Client extends Model
     {
         return $this->hasMany(Paquete::class)->with(['participantes', 'liberados']);
     }
+
+    public function documentos(){
+        return $this->hasMany(ClientDocumento::class);
+    }
 }

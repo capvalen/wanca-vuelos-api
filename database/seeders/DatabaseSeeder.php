@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BancoSemilla::class);
         $this->call(ProcesoSemilla::class);
         $this->call(CajaSemilla::class);
+        $this->call(DocumentoSemilla::class);
     }
 }

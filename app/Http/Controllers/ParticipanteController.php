@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientDocumento;
+use App\Models\Documento;
 use App\Models\Participante;
+use App\Models\ParticipanteDocumentos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +16,8 @@ class ParticipanteController extends Controller
      */
     public function index()
     {
-        $participante = Participante::where('activo', 1)->orderBy('id', 'desc')->limit(50)->get();
+        $participante = Participante::where('activo', 1)->orderBy('id', 'desc')
+        ->with('documentos')->limit(50)->get();
         return response()->json($participante);
     }
 
@@ -55,10 +59,19 @@ class ParticipanteController extends Controller
         if ($request->boolean('copia_mama')) $datosValidados['fecha_copia_mama'] = now()->toDateString();
 	
 		//Una vez validado, se crea, pero se toma datos por defecto de lo ya validado
-		$tarea = Participante::create($datosValidados);
+		$participante = Participante::create($datosValidados);
+        
+        $documetos = Documento::where('pertenencia', 'participante')->get();
+		$data = [];
+
+		foreach ($documetos as $documento) {
+			$data['participante_id'] = $participante->id;
+			$data['documento_id'] = $documento->id;
+			ParticipanteDocumentos::create($data);
+		}
 	
 		// entregamos la $tarea que acabamos de ingresar
-		return response()->json($tarea, 201);
+		return response()->json($participante, 201);
     }
 
     /**
@@ -66,7 +79,8 @@ class ParticipanteController extends Controller
      */
     public function show(string $id)
     {
-        $participante = Participante::where('id', $id)->first();
+        $participante = Participante::where('id', $id)
+        ->with('documentos')->first();
         return response()->json($participante);
     }
 

@@ -16,4 +16,16 @@ class Participante extends Model
             ->withTimestamps(); // si usas timestamps en la tabla pivote
             //->withPivot(['rol', 'cantidad']); // si agregaste campos adicionales
     }
+
+    public function documentos(){
+        return $this->hasMany(ParticipanteDocumentos::class);
+    }
+
+
+    /* public function participantes()
+    {
+        return $this->belongsToMany(Participante::class, 'paquete_participantes')
+        ->wherePivot('activo', 1)  // 👈 Filtra por activo=1 en la pivot
+        ->withPivot('id');
+    } */
 }
