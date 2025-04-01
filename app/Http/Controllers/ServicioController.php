@@ -12,7 +12,9 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        return Servicio::where('activo', 1)->get();
+        return Servicio::where('activo', 1)
+        ->orderBy('servicio', 'asc')
+        ->get();
     }
 
     /**

@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Proceso;
+use App\Models\Linea;
 use Illuminate\Http\Request;
 
-class ProcesoController extends Controller
+class LineaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Proceso::where('activo', 1)->orderBy('proceso', 'asc')->get();
-    }
-    public function listarSumas()
-    {
-        return Proceso::where('activo', 1)
-        ->where('operacion', 'suma')
-        ->orderBy('proceso', 'asc')->get();
+        return Linea::where('activo', 1)
+        ->orderBy('aerolinea', 'asc')
+        ->get();
     }
 
     /**

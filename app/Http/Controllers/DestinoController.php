@@ -12,7 +12,8 @@ class DestinoController extends Controller
      */
     public function index()
     {
-        return Destino::where('activo', 1)->get();
+        return Destino::where('activo', 1)
+        ->orderBy('destino', 'asc')->get();
     }
 
     /**

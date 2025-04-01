@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('paterno');
             $table->string('materno');
-            $table->string('usuario')->unique();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('usuario')->unique();
+            $table->string('celular')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->smallInteger('nivel')->comment('1: administrador, 2: usuario');

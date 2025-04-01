@@ -14,6 +14,7 @@ use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\DestinoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\LiberadoController;
+use App\Http\Controllers\LineaController;
 use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\PaqueteLiberadosController;
@@ -25,8 +26,9 @@ use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RelacionController;
 use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViajeController;
-use App\Models\CajaMovimientos;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -57,6 +59,9 @@ Route::resource('aportaciones', AportacionController::class)->only('index', 'sto
 Route::resource('documentos', DocumentoController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('cliente-documentos', ClientDocumentosController::class)->only('index', 'store', 'update', 'destroy', 'show');
 Route::resource('participante-documentos', ParticipanteDocumentosController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('lineas', LineaController::class)->only('index', 'store', 'update', 'destroy', 'show');
+Route::resource('usuarios', UserController::class)->only('show', 'store', 'update');
+
 
 Route::post('buscarCliente', [ClientController::class, 'buscarCliente']);
 Route::post('buscarLiberado', [LiberadoController::class, 'buscarLiberado']);
@@ -69,3 +74,4 @@ Route::post('buscarProveedor', [ProveedorController::class, 'buscarProveedor']);
 Route::post('agregarParticipante', [PaqueteController::class, 'agregarParticipantePaquete']);
 Route::get('cajaPorFecha/{fecha}', [CajaController::class, 'cajaPorFecha']);
 Route::get('ultimaCaja', [CajaController::class, 'ultimaCaja']);
+Route::get('aportacion/sumas', [ProcesoController::class, 'listarSumas']);

@@ -76,6 +76,7 @@ class ProveedorController extends Controller
 			'final' => 'nullable|date',
 			'contacto' => 'nullable|string|max:255',
 			'observaciones' => 'nullable|string',
+            'detalles' => 'nullable|array'
 		]);
 	
 		$proveedor->update($confirmado->validate());

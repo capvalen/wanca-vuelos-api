@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Proceso extends Model
+class Linea extends Model
 {
-    protected $fillable=['proceso', 'descripcion_larga', 'operacion','activo'];
+    protected $fillable=['aerolinea'];
     public $timestamps = false; // 👈 Desactiva created_at y updated_at
 }

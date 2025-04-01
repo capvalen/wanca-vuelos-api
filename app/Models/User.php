@@ -21,6 +21,7 @@ class User extends Authenticatable
         'paterno',
         'materno',
         'nombres',
+        'name', 'celular', 'direccion',
         'usuario',
         'email',
         'password',
@@ -35,6 +36,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'email_verified_at'
     ];
 
     public function getAuthIdentifierName()

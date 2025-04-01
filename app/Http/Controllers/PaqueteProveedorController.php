@@ -71,4 +71,6 @@ class PaqueteProveedorController extends Controller
 
         return response()->json(null, 204);
     }
+
+
 }

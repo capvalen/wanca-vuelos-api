@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Proveedor extends Model
 {
-    protected $fillable=['nombre','destino_id','servicio_id','concepto_id','inicio','final','contacto','observaciones','activo'];
+    protected $fillable=['nombre','destino_id','servicio_id','concepto_id','inicio','final','contacto','observaciones', 'detalles','activo'];
     protected $appends = ['destino_nombre', 'servicio_nombre', 'concepto_nombre']; // 👈 Agregar "destino_nombre" a la salida JSON
     //protected $appends = ['ciudad']; // 👈 Agregar "ciudad" a la salida JSON
+    protected $casts = [
+        'detalles' => 'array', // o 'object' si prefieres un objeto stdClass
+    ];
 
     public function destino(){
         return $this->belongsTo(Destino::class);
